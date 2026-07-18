@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinguaBiz — Messages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F6FAF7;--surface:#FFFFFF;--ink:#0F3D2B;--muted:#6C7F73;--line:#E1E9E2;--coral:#1FC16B;--coral-soft:#DFF5E8;--navy-soft:#E7F2EA}
+body{background:#E2EAE4;display:flex;justify-content:center;font-family:'Inter',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.screen{width:375px;height:812px;background:var(--bg);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px 0;font-size:14.5px;font-weight:600}
+.sb-icons{display:flex;gap:6px;align-items:center}
+.header{padding:14px 22px 0;display:flex;align-items:center;justify-content:space-between}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:29px;letter-spacing:-.01em}
+.hicons{display:flex;align-items:center;gap:10px}
+.hbtn{width:38px;height:38px;border-radius:13px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
+.hbtn .badge{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;border-radius:99px;background:var(--coral);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--bg)}
+.avatar-me{width:38px;height:38px;border-radius:13px;object-fit:cover;border:1.5px solid var(--line)}
+.search{margin:15px 22px 0;height:45px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 14px;color:var(--muted);font-size:13.5px}
+.chips{margin-top:14px;padding:0 22px;display:flex;gap:8px;overflow:hidden;position:relative}
+.chips::after{content:"";position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(90deg,transparent,var(--bg))}
+.chip{height:33px;padding:0 15px;border-radius:99px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer}
+.chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.list{margin-top:14px;flex:1;overflow:hidden;padding-bottom:86px}
+.item{display:flex;gap:12px;padding:13px 22px;align-items:flex-start;cursor:pointer}
+.item:nth-child(1){}.item:nth-child(2){}.item:nth-child(3){}.item:nth-child(4){}.item:nth-child(5){}.item:nth-child(6){}
+.item + .item{border-top:1px solid #EAF1EB}
+.avwrap{position:relative;flex-shrink:0}
+.av{width:50px;height:50px;border-radius:17px;object-fit:cover}
+.on{position:absolute;bottom:-2px;right:-2px;width:13px;height:13px;border-radius:99px;background:#3BB273;border:2.5px solid var(--bg)}
+.flagchip{position:absolute;top:-6px;left:-6px;background:var(--ink);color:#fff;font-size:8.5px;font-weight:700;letter-spacing:.05em;border-radius:6px;padding:2.5px 5px;border:2px solid var(--bg)}
+.body{flex:1;min-width:0}
+.r1{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.name{font-size:14.5px;font-weight:600}
+.time{font-size:11px;color:var(--muted);flex-shrink:0}
+.orig{margin-top:3px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trad{margin-top:3px;font-size:13px;color:var(--ink);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px}
+.trad svg{flex-shrink:0}
+.meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;margin-left:4px;padding-top:18px}
+.unread{min-width:20px;height:20px;border-radius:99px;background:var(--coral);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 6px;box-shadow:0 4px 10px rgba(31,193,107,.35)}
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:82px;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;padding:6px 10px 22px}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10.5px;font-weight:600;color:var(--muted);cursor:pointer}
+.tab.active{color:var(--coral)}
+.fab{position:absolute;bottom:100px;right:20px;width:56px;height:56px;border-radius:19px;background:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(15,61,43,.35);cursor:pointer;z-index:5}
+.homebar{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:99px;background:var(--ink);opacity:.9;z-index:6}
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="statusbar"><span>9:41</span>
+    <div class="sb-icons">
+      <svg width="17" height="11" viewBox="0 0 17 11" fill="#0F3D2B"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+      <svg width="16" height="11" viewBox="0 0 24 18" fill="none" stroke="#0F3D2B" stroke-width="2.6" stroke-linecap="round"><path d="M2 7a15 15 0 0 1 20 0"/><path d="M6 11a9.5 9.5 0 0 1 12 0"/><path d="M10 15a4.5 4.5 0 0 1 4 0"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="#0F3D2B" stroke-opacity=".4"/><rect x="2" y="2" width="18" height="8" rx="2" fill="#0F3D2B"/><path d="M23 4v4a2.2 2.2 0 0 0 0-4z" fill="#0F3D2B" fill-opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="header">
+    <h1>Messages</h1>
+    <div class="hicons">
+      <div class="hbtn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F3D2B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <div class="badge">3</div>
+      </div>
+      <img class="avatar-me" src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-karim.jpg" alt="Moi">
+    </div>
+  </div>
+
+  <div class="search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6C7F73" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    Rechercher une conversation…
+  </div>
+
+  <div class="chips">
+    <div class="chip active">Tous</div>
+    <div class="chip">Non lus</div>
+    <div class="chip">Arabe</div>
+    <div class="chip">Portugais</div>
+    <div class="chip">Espagnol</div>
+  </div>
+
+  <div class="list">
+    <div class="item">
+      <div class="avwrap"><img class="av" src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-ahmed.jpg" alt=""><span class="flagchip">AR</span><span class="on"></span></div>
+      <div class="body">
+        <div class="r1"><span class="name">Ahmed Karim</span><span class="time">14:32</span></div>
+        <div class="orig">مرحبا، هل المنتج متاح؟</div>
+        <div class="trad"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1FC16B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Bonjour, le produit est-il disponible&nbsp;?</div>
+      </div>
+      <div class="meta"><div class="unread">3</div></div>
+    </div>
+    <div class="item">
+      <div class="avwrap"><img class="av" src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-sofia.jpg" alt=""><span class="flagchip">PT</span><span class="on"></span></div>
+      <div class="body">
+        <div class="r1"><span class="name">Sofia Mendes</span><span class="time">13:15</span></div>
+        <div class="orig">Olá! Preciso do preço</div>
+        <div class="trad"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1FC16B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Bonjour&nbsp;! J’ai besoin du prix</div>
+      </div>
+      <div class="meta"><div class="unread">1</div></div>
+    </div>
+    <div class="item">
+      <div class="avwrap"><img class="av" src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-wang.jpg" alt=""><span class="flagchip">ZH</span></div>
+      <div class="body">
+        <div class="r1"><span class="name">Wang Lei</span><span class="time">12:45</span></div>
+        <div class="orig">你好！产品什么时候到货？</div>
+        <div class="trad"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1FC16B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Bonjour&nbsp;! Quand arrive le produit&nbsp;?</div>
+      </div>
+      <div class="meta">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6C7F73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="item">
+      <div class="avwrap"><img class="av" src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-mohammed.jpg" alt=""><span class="flagchip">AR</span></div>
+      <div class="body">
+        <div class="r1"><span class="name">Mohammed Al-Rashid</span><span class="time">11:30</span></div>
+        <div class="orig">كيف يمكنني الدفع؟</div>
+        <div class="trad"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1FC16B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Comment puis-je payer&nbsp;?</div>
+      </div>
+      <div class="meta"><div class="unread">2</div></div>
+    </div>
+    <div class="item">
+      <div class="avwrap"><img class="av" src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-isabella.jpg" alt=""><span class="flagchip">IT</span></div>
+      <div class="body">
+        <div class="r1"><span class="name">Isabella Romano</span><span class="time">Hier</span></div>
+        <div class="orig">Quando arriva il pacco?</div>
+        <div class="trad"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1FC16B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Quand arrive le colis&nbsp;?</div>
+      </div>
+      <div class="meta">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6C7F73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+    <div class="item">
+      <div class="avwrap"><img class="av" src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-carlos.jpg" alt=""><span class="flagchip">ES</span></div>
+      <div class="body">
+        <div class="r1"><span class="name">Carlos Mendez</span><span class="time">Hier</span></div>
+        <div class="orig">¿Tiene descuentos?</div>
+        <div class="trad"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1FC16B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Avez-vous des réductions&nbsp;?</div>
+      </div>
+      <div class="meta">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6C7F73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="fab">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+  </div>
+
+  <div class="tabbar">
+    <div class="tab active">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Messages
+    </div>
+    <div class="tab">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Contacts
+    </div>
+    <div class="tab">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 3l2.2 6.3 6.3 2.2-6.3 2.2L12 20l-2.2-6.3L3.5 11.5l6.3-2.2z"/></svg>
+      Résumé IA
+    </div>
+    <div class="tab">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.08a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Réglages
+    </div>
+  </div>
+  <div class="homebar"></div>
+</div>
+</body>
+</html>
+
+
+

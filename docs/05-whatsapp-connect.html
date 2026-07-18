@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinguaBiz — Connexion WhatsApp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F6FAF7;--surface:#FFFFFF;--ink:#0F3D2B;--muted:#6C7F73;--line:#E1E9E2;--coral:#1FC16B;--coral-soft:#DFF5E8;--navy-soft:#E7F2EA;--wa:#25D366}
+body{background:#E2EAE4;display:flex;justify-content:center;font-family:'Inter',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.screen{width:375px;height:812px;background:var(--bg);position:relative;overflow:hidden;display:flex;flex-direction:column;padding:0 24px}
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:16px 4px 0;font-size:14.5px;font-weight:600}
+.sb-icons{display:flex;gap:6px;align-items:center}
+.topbar{display:flex;align-items:center;padding-top:18px}
+.back{width:36px;height:36px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:29px;letter-spacing:-.01em;margin-top:26px}
+.sub{margin-top:9px;font-size:14px;line-height:1.55;color:var(--muted)}
+.steps{margin-top:26px;display:flex;align-items:flex-start}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative}
+.step .n{width:32px;height:32px;border-radius:99px;background:var(--surface);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--muted);position:relative;z-index:1}
+.step.active .n{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:0 6px 16px rgba(15,61,43,.3)}
+.step .l{margin-top:8px;font-size:11px;font-weight:600;color:var(--muted);max-width:88px;line-height:1.35}
+.step.active .l{color:var(--ink)}
+.step::after{content:"";position:absolute;top:16px;left:calc(50% + 22px);width:calc(100% - 44px);height:1.5px;background:var(--line)}
+.step:last-child::after{display:none}
+.card{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:28px 20px 24px;display:flex;flex-direction:column;align-items:center;box-shadow:0 20px 46px rgba(15,61,43,.09)}
+.wamark{width:64px;height:64px;border-radius:21px;background:#E8F9EE;display:flex;align-items:center;justify-content:center;position:relative}
+.wamark .live{position:absolute;bottom:-5px;right:-5px;width:20px;height:20px;border-radius:99px;background:var(--coral);border:3.5px solid var(--surface)}
+.card h2{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin-top:16px;text-align:center;line-height:1.3}
+.card .d{margin-top:7px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
+.phone{margin-top:20px;display:flex;gap:9px;width:100%}
+.cc{height:52px;border-radius:15px;border:1px solid var(--line);background:var(--bg);padding:0 13px;display:flex;align-items:center;gap:7px;font-size:14.5px;font-weight:600;cursor:pointer;flex-shrink:0}
+.num{flex:1;height:52px;border-radius:15px;border:1px solid var(--line);background:var(--bg);padding:0 15px;font-family:'Inter',sans-serif;font-size:15px;letter-spacing:.04em;color:var(--ink);outline:none;min-width:0}
+.num::placeholder{color:#A9B6AD}
+.sms{margin-top:13px;display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--muted)}
+.trust{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:8px}
+.trust img{width:26px;height:26px;border-radius:99px;border:2px solid var(--bg);object-fit:cover;margin-left:-8px}
+.trust img:first-child{margin-left:0}
+.trust span{font-size:12px;color:var(--muted)}
+.trust b{color:var(--ink)}
+.spacer{flex:1}
+.cta{height:56px;border:none;border-radius:16px;background:linear-gradient(135deg,#2BD47D,#12A356);color:#fff;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 10px 24px rgba(31,193,107,.35)}
+.alt{margin:13px 0 34px;text-align:center;font-size:13px;color:var(--muted)}
+.alt a{color:var(--coral);font-weight:600;text-decoration:none}
+.homebar{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:99px;background:var(--ink);opacity:.9}
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="statusbar"><span>9:41</span>
+    <div class="sb-icons">
+      <svg width="17" height="11" viewBox="0 0 17 11" fill="#0F3D2B"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+      <svg width="16" height="11" viewBox="0 0 24 18" fill="none" stroke="#0F3D2B" stroke-width="2.6" stroke-linecap="round"><path d="M2 7a15 15 0 0 1 20 0"/><path d="M6 11a9.5 9.5 0 0 1 12 0"/><path d="M10 15a4.5 4.5 0 0 1 4 0"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="#0F3D2B" stroke-opacity=".4"/><rect x="2" y="2" width="18" height="8" rx="2" fill="#0F3D2B"/><path d="M23 4v4a2.2 2.2 0 0 0 0-4z" fill="#0F3D2B" fill-opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></div>
+  </div>
+
+  <h1>Connexion WhatsApp</h1>
+  <p class="sub">Liez votre compte WhatsApp Business en quelques secondes.</p>
+
+  <div class="steps">
+    <div class="step active"><div class="n">1</div><div class="l">Numéro WhatsApp</div></div>
+    <div class="step"><div class="n">2</div><div class="l">Vérification</div></div>
+    <div class="step"><div class="n">3</div><div class="l">Synchronisation</div></div>
+  </div>
+
+  <div class="card">
+    <div class="wamark">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      <div class="live"></div>
+    </div>
+    <h2>Entrez votre numéro professionnel</h2>
+    <p class="d">Celui de votre compte WhatsApp Business.</p>
+    <div class="phone">
+      <div class="cc">🇩🇿 +213
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6C7F73" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <input class="num" type="tel" placeholder="XX XX XX XX XX">
+    </div>
+    <div class="sms">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6C7F73" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Code de vérification envoyé par SMS
+    </div>
+  </div>
+
+  <div class="trust">
+    <img src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-isabella.jpg" alt="">
+    <img src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-ahmed.jpg" alt="">
+    <img src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/av-sofia.jpg" alt="">
+    <span><b>12 000+</b> pros déjà connectés</span>
+  </div>
+
+  <div class="spacer"></div>
+  <button class="cta">Recevoir le code
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
+  <p class="alt">Pas de compte WhatsApp Business&nbsp;? <a href="06-inbox.html">Essayer la démo</a></p>
+  <div class="homebar"></div>
+</div>
+</body>
+</html>
+
+
+

@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinguaBiz — Traduction en direct</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F6FAF7;--surface:#FFFFFF;--ink:#0F3D2B;--muted:#6C7F73;--line:#E1E9E2;--coral:#1FC16B;--coral-soft:#DFF5E8;--navy-soft:#E7F2EA}
+body{background:#E2EAE4;display:flex;justify-content:center;font-family:'Inter',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.screen{width:375px;height:812px;background:var(--bg);position:relative;overflow:hidden;display:flex;flex-direction:column;padding:0 24px}
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:16px 4px 0;font-size:14.5px;font-weight:600}
+.sb-icons{display:flex;gap:6px;align-items:center}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding-top:18px}
+.back{width:36px;height:36px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.dots{display:flex;gap:6px}
+.dot{width:6px;height:6px;border-radius:99px;background:#CBDCD0}
+.dot.active{width:22px;background:var(--ink)}
+.skip{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none}
+.hero{margin-top:22px;position:relative;height:340px}
+.hero .photo{width:100%;height:300px;object-fit:cover;border-radius:26px;box-shadow:0 22px 48px rgba(15,61,43,.2)}
+.chip{position:absolute;background:var(--surface);border-radius:14px;box-shadow:0 12px 30px rgba(15,61,43,.2);padding:10px 13px;max-width:230px}
+.chip .lang{display:block;font-size:8.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.chip.ar{top:16px;left:14px}
+.chip.ar .t{direction:rtl;text-align:right;font-size:13px;font-weight:500}
+.chip.fr{bottom:22px;right:14px;background:var(--ink);color:#fff}
+.chip.fr .lang{color:rgba(255,255,255,.55)}
+.chip.fr .t{font-size:13px;font-weight:500}
+.speedbadge{position:absolute;bottom:110px;left:18px;background:var(--surface);border-radius:99px;padding:7px 13px;display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;box-shadow:0 10px 24px rgba(15,61,43,.18)}
+.speedbadge b{color:var(--coral)}
+.arrowbadge{position:absolute;top:50%;left:50%;transform:translate(-50%,-64%);width:48px;height:48px;border-radius:99px;background:var(--coral);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(31,193,107,.5);border:3.5px solid rgba(255,255,255,.9)}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:30px;line-height:1.18;letter-spacing:-.01em;margin-top:12px}
+h1 em{font-style:italic;color:var(--coral)}
+.sub{margin-top:11px;font-size:14.5px;line-height:1.55;color:var(--muted)}
+.stats{margin-top:20px;display:flex;gap:9px}
+.stat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:13px 8px;text-align:center}
+.stat .v{font-family:'Fraunces',serif;font-weight:600;font-size:19px}
+.stat .v span{color:var(--coral)}
+.stat .l{margin-top:3px;font-size:10.5px;color:var(--muted);font-weight:500}
+.spacer{flex:1}
+.cta{height:56px;border:none;border-radius:16px;background:linear-gradient(135deg,#2BD47D,#12A356);color:#fff;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 10px 24px rgba(31,193,107,.35);margin-bottom:36px}
+.homebar{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:99px;background:var(--ink);opacity:.9}
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="statusbar"><span>9:41</span>
+    <div class="sb-icons">
+      <svg width="17" height="11" viewBox="0 0 17 11" fill="#0F3D2B"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+      <svg width="16" height="11" viewBox="0 0 24 18" fill="none" stroke="#0F3D2B" stroke-width="2.6" stroke-linecap="round"><path d="M2 7a15 15 0 0 1 20 0"/><path d="M6 11a9.5 9.5 0 0 1 12 0"/><path d="M10 15a4.5 4.5 0 0 1 4 0"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="#0F3D2B" stroke-opacity=".4"/><rect x="2" y="2" width="18" height="8" rx="2" fill="#0F3D2B"/><path d="M23 4v4a2.2 2.2 0 0 0 0-4z" fill="#0F3D2B" fill-opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></div>
+    <div class="dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div></div>
+    <a class="skip" href="04-signin.html">Passer</a>
+  </div>
+
+  <div class="hero">
+    <img class="photo" src="https://raw.githubusercontent.com/marketingmonpetitbureau-lab/linguabiz-app/main/assets/hero2-c.jpg" alt="Marchand connecté au monde">
+    <div class="chip ar">
+      <span class="lang">Votre client · Arabe</span>
+      <div class="t">مرحباً، كم سعر الجملة؟</div>
+    </div>
+    <div class="arrowbadge">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+    </div>
+    <div class="chip fr">
+      <span class="lang">Vous · Français</span>
+      <div class="t">Bonjour, quel est le prix de gros&nbsp;?</div>
+    </div>
+    <div class="speedbadge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="#1FC16B" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Traduit en <b>1,4 s</b>
+    </div>
+  </div>
+
+  <h1>Ils écrivent en arabe.<br>Vous lisez en <em>français</em>.</h1>
+  <p class="sub">Chaque message est traduit instantanément, dans les deux sens. Personne ne voit la différence.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="v">50<span>+</span></div><div class="l">Langues</div></div>
+    <div class="stat"><div class="v">1,4<span>s</span></div><div class="l">Traduction</div></div>
+    <div class="stat"><div class="v">E2E</div><div class="l">Chiffré</div></div>
+  </div>
+
+  <div class="spacer"></div>
+  <button class="cta">Continuer
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
+  <div class="homebar"></div>
+</div>
+</body>
+</html>
+
