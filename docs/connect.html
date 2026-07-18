@@ -17,8 +17,10 @@ p{margin-top:10px;font-size:14px;line-height:1.6;color:#6C7F73}
 .steps li{margin:8px 0 8px 4px;padding-left:8px}
 button{margin-top:8px;width:100%;height:54px;border:none;border-radius:15px;background:linear-gradient(135deg,#2BD47D,#12A356);color:#fff;font-family:'Inter',sans-serif;font-size:15.5px;font-weight:600;cursor:pointer;box-shadow:0 10px 24px rgba(31,193,107,.35)}
 button:disabled{opacity:.6}
-.status{margin-top:16px;font-size:13px;font-weight:600;min-height:20px}
+.status{margin-top:16px;font-size:13px;font-weight:600;min-height:20px;line-height:1.5}
 .ok{color:#12A356}.err{color:#D14343}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid #CBDCD0;border-top-color:#12A356;border-radius:99px;animation:sp 1s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -33,7 +35,7 @@ button:disabled{opacity:.6}
     <li>Choisissez « utiliser mon numéro existant »</li>
     <li>Scannez le QR code avec votre app WhatsApp Business</li>
   </ol>
-  <button id="connect" disabled>Chargement…</button>
+  <button id="connect">Connecter avec Facebook</button>
   <div class="status" id="status"></div>
 </div>
 
@@ -41,77 +43,80 @@ button:disabled{opacity:.6}
   var APP_ID = '1032071186006523';
   var CONFIG_ID = '1343489331225944';
   var ONBOARD_URL = 'https://erelxhzrcmujpwldgrsm.supabase.co/functions/v1/wa-onboard';
+  var REDIRECT_URI = 'https://marketingmonpetitbureau-lab.github.io/linguabiz-app/connect.html';
 
-  var lbtoken = (location.hash.match(/lbtoken=([^&]+)/) || [])[1] || '';
-  var sessionInfo = null;
   var statusEl = document.getElementById('status');
   var btn = document.getElementById('connect');
 
-  window.addEventListener('message', function (event) {
-    if (!String(event.origin).endsWith('facebook.com')) return;
-    try {
-      var data = JSON.parse(event.data);
-      if (data.type === 'WA_EMBEDDED_SIGNUP' && data.event === 'FINISH') {
-        sessionInfo = data.data; // { phone_number_id, waba_id }
-      }
-    } catch (e) { /* messages non-JSON ignorés */ }
-  });
+  // 1. Récupère le jeton LinguaBiz passé par l'app (et le garde pour le retour de redirection)
+  var m = location.hash.match(/lbtoken=([^&]+)/);
+  if (m) {
+    try { sessionStorage.setItem('lbtoken', m[1]); } catch (e) {}
+    history.replaceState(null, '', location.pathname);
+  }
+  function getLbToken() {
+    try { return sessionStorage.getItem('lbtoken') || ''; } catch (e) { return ''; }
+  }
 
-  window.fbAsyncInit = function () {
-    FB.init({ appId: APP_ID, autoLogAppEvents: true, xfbml: true, version: 'v25.0' });
-    btn.disabled = false;
-    btn.textContent = 'Connecter avec Facebook';
-  };
+  // 2. Retour de Facebook ? (redirection complète, fiable sur mobile)
+  var qs = new URLSearchParams(location.search);
+  var code = qs.get('code');
+  if (code) {
+    history.replaceState(null, '', location.pathname);
+    finalize(code);
+  }
+  if (qs.get('error')) {
+    statusEl.className = 'status err';
+    statusEl.textContent = 'Connexion refusée : ' + (qs.get('error_description') || qs.get('error'));
+  }
 
   btn.addEventListener('click', function () {
     statusEl.textContent = '';
-    if (!lbtoken) {
+    if (!getLbToken()) {
       statusEl.className = 'status err';
-      statusEl.textContent = 'Ouvrez cette page depuis l’app LinguaBiz (Réglages → Connecter WhatsApp).';
+      statusEl.textContent = 'Ouvrez cette page depuis l’app LinguaBiz (Réglages → Connecter WhatsApp Business).';
       return;
     }
-    FB.login(function (response) {
-      var code = response && response.authResponse && response.authResponse.code;
-      if (!code) {
-        statusEl.className = 'status err';
-        statusEl.textContent = 'Connexion annulée.';
-        return;
-      }
-      var finish = function () {
-        if (!sessionInfo) { setTimeout(finish, 500); return; }
-        statusEl.className = 'status';
-        statusEl.textContent = 'Finalisation…';
-        fetch(ONBOARD_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            code: code,
-            waba_id: sessionInfo.waba_id,
-            phone_number_id: sessionInfo.phone_number_id,
-            lbtoken: lbtoken,
-          }),
-        }).then(function (r) { return r.json(); }).then(function (d) {
-          if (d.connected) {
-            statusEl.className = 'status ok';
-            statusEl.textContent = '✅ WhatsApp connecté ! Retournez dans LinguaBiz.';
-          } else {
-            statusEl.className = 'status err';
-            statusEl.textContent = 'Erreur : ' + (d.error || 'inconnue');
-          }
-        }).catch(function () {
-          statusEl.className = 'status err';
-          statusEl.textContent = 'Erreur réseau — réessayez.';
-        });
-      };
-      finish();
-    }, {
-      config_id: CONFIG_ID,
-      response_type: 'code',
-      override_default_response_type: true,
-      extras: { sessionInfoVersion: '3', featureType: 'whatsapp_business_app_onboarding' },
-    });
+    var extras = encodeURIComponent(JSON.stringify({
+      sessionInfoVersion: '3',
+      featureType: 'whatsapp_business_app_onboarding',
+    }));
+    location.href = 'https://www.facebook.com/v25.0/dialog/oauth'
+      + '?client_id=' + APP_ID
+      + '&config_id=' + CONFIG_ID
+      + '&response_type=code'
+      + '&override_default_response_type=true'
+      + '&redirect_uri=' + encodeURIComponent(REDIRECT_URI)
+      + '&extras=' + extras;
   });
+
+  function finalize(code) {
+    btn.disabled = true;
+    statusEl.className = 'status';
+    statusEl.innerHTML = '<span class="spin"></span>Finalisation de la connexion…';
+    fetch(ONBOARD_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code: code,
+        redirect_uri: REDIRECT_URI,
+        lbtoken: getLbToken(),
+      }),
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      btn.disabled = false;
+      if (d.connected) {
+        statusEl.className = 'status ok';
+        statusEl.textContent = '✅ WhatsApp connecté (' + (d.display_phone_number || d.phone_number_id) + ') ! Retournez dans LinguaBiz.';
+      } else {
+        statusEl.className = 'status err';
+        statusEl.textContent = 'Erreur : ' + (d.error || 'inconnue') + (d.detail ? ' — ' + JSON.stringify(d.detail).slice(0, 140) : '');
+      }
+    }).catch(function () {
+      btn.disabled = false;
+      statusEl.className = 'status err';
+      statusEl.textContent = 'Erreur réseau — réessayez.';
+    });
+  }
 </script>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js"></script>
 </body>
 </html>
