@@ -116,12 +116,10 @@ button:disabled{opacity:.6}
     btn.disabled = true;
     statusEl.className = 'status';
     statusEl.innerHTML = '<span class="spin"></span>Finalisation de la connexion…';
-    var payload = { code: code, lbtoken: getLbToken() };
+    var payload = { code: code, lbtoken: getLbToken(), redirect_uri: REDIRECT_URI };
     if (sessionInfo && sessionInfo.waba_id) {
       payload.waba_id = sessionInfo.waba_id;
       payload.phone_number_id = sessionInfo.phone_number_id;
-    } else {
-      payload.redirect_uri = REDIRECT_URI;
     }
     fetch(ONBOARD_URL, {
       method: 'POST',
