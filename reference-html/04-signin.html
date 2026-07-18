@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinguaBiz — Connexion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F6FAF7;--surface:#FFFFFF;--ink:#0F3D2B;--muted:#6C7F73;--line:#E1E9E2;--coral:#1FC16B;--coral-soft:#DFF5E8;--navy-soft:#E7F2EA}
+body{background:#E2EAE4;display:flex;justify-content:center;font-family:'Inter',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.screen{width:375px;height:812px;background:var(--bg);position:relative;overflow:hidden;display:flex;flex-direction:column;padding:0 24px}
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:16px 4px 0;font-size:14.5px;font-weight:600}
+.sb-icons{display:flex;gap:6px;align-items:center}
+.deco{position:absolute;border-radius:99px;background:var(--coral-soft);opacity:.55;filter:blur(2px)}
+.d1{width:180px;height:180px;top:-60px;right:-70px}
+.d2{width:120px;height:120px;bottom:120px;left:-60px;background:var(--navy-soft)}
+.brand{margin-top:30px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
+.mark{width:58px;height:58px;border-radius:19px;background:var(--ink);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 14px 30px rgba(15,61,43,.25)}
+.mark .dot{position:absolute;bottom:-4px;right:-4px;width:18px;height:18px;border-radius:99px;background:var(--coral);border:3px solid var(--bg)}
+.wordmark{margin-top:12px;font-family:'Fraunces',serif;font-weight:600;font-size:19px;letter-spacing:-.01em}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:31px;text-align:center;margin-top:20px;letter-spacing:-.01em;position:relative;z-index:1}
+.sub{margin-top:8px;text-align:center;font-size:14px;line-height:1.55;color:var(--muted);max-width:270px;align-self:center;position:relative;z-index:1}
+.social{margin-top:24px;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.sbtn{height:51px;border-radius:15px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Inter',sans-serif;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer;box-shadow:0 4px 12px rgba(15,61,43,.05)}
+.divider{margin:20px 0 16px;display:flex;align-items:center;gap:14px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.form{position:relative;z-index:1}
+.field label{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:7px}
+.field label a{font-size:12px;font-weight:600;color:var(--coral);text-decoration:none}
+.field input{width:100%;height:51px;border-radius:15px;border:1px solid var(--line);background:var(--surface);padding:0 16px;font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);outline:none}
+.field input::placeholder{color:#A9B6AD}
+.field + .field{margin-top:13px}
+.cta{margin-top:20px;height:55px;border:none;border-radius:16px;background:linear-gradient(135deg,#2BD47D,#12A356);color:#fff;font-family:'Inter',sans-serif;font-size:15.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 10px 24px rgba(31,193,107,.35);width:100%}
+.signup{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
+.signup a{color:var(--coral);font-weight:600;text-decoration:none}
+.spacer{flex:1}
+.legal{margin-bottom:32px;text-align:center;font-size:11px;line-height:1.6;color:var(--muted)}
+.legal a{color:var(--ink);font-weight:500;text-decoration:underline;text-decoration-color:var(--line)}
+.homebar{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:99px;background:var(--ink);opacity:.9}
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="statusbar"><span>9:41</span>
+    <div class="sb-icons">
+      <svg width="17" height="11" viewBox="0 0 17 11" fill="#0F3D2B"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+      <svg width="16" height="11" viewBox="0 0 24 18" fill="none" stroke="#0F3D2B" stroke-width="2.6" stroke-linecap="round"><path d="M2 7a15 15 0 0 1 20 0"/><path d="M6 11a9.5 9.5 0 0 1 12 0"/><path d="M10 15a4.5 4.5 0 0 1 4 0"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="#0F3D2B" stroke-opacity=".4"/><rect x="2" y="2" width="18" height="8" rx="2" fill="#0F3D2B"/><path d="M23 4v4a2.2 2.2 0 0 0 0-4z" fill="#0F3D2B" fill-opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <div class="deco d1"></div>
+  <div class="deco d2"></div>
+
+  <div class="brand">
+    <div class="mark">
+      <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      <div class="dot"></div>
+    </div>
+    <div class="wordmark">LinguaBiz</div>
+  </div>
+
+  <h1>Bienvenue</h1>
+  <p class="sub">Connectez-vous pour communiquer avec vos clients, sans barrière de langue.</p>
+
+  <div class="social">
+    <button class="sbtn" onclick="location.href='05-whatsapp-connect.html'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#0F3D2B"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+      Continuer avec Apple
+    </button>
+    <button class="sbtn" onclick="location.href='05-whatsapp-connect.html'">
+      <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.2 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.2 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+      Continuer avec Google
+    </button>
+  </div>
+
+  <div class="divider">ou par e-mail</div>
+
+  <div class="form">
+    <div class="field">
+      <label>Adresse e-mail</label>
+      <input type="email" placeholder="vous@entreprise.com">
+    </div>
+    <div class="field">
+      <label>Mot de passe <a href="#">Mot de passe oublié&nbsp;?</a></label>
+      <input type="password" placeholder="••••••••">
+    </div>
+    <button class="cta" onclick="location.href='05-whatsapp-connect.html'">Se connecter
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+    <p class="signup">Pas de compte&nbsp;? <a href="05-whatsapp-connect.html">Créer un compte</a></p>
+  </div>
+
+  <div class="spacer"></div>
+  <p class="legal">En continuant, vous acceptez nos <a href="#">Conditions d’utilisation</a> et notre <a href="#">Politique de confidentialité</a>.</p>
+  <div class="homebar"></div>
+</div>
+</body>
+</html>
+
+
+
