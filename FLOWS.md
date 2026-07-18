@@ -2,6 +2,14 @@
 
 **Règle d'or** : l'utilisateur doit voir un message traduit dans les **60 secondes** après l'installation. Tout ce qui retarde ça est optionnel ou supprimé.
 
+## 0. Langue de l'interface (retour utilisateur 18/07)
+
+- L'UI de l'app (onboarding compris) est **auto-traduite selon la langue du téléphone** (expo-localization) : FR + AR + EN au lancement, extensible.
+- **Arabe = interface RTL complète** (miroir), pas seulement le contenu des bulles.
+- Filet de sécurité : bouton 🌐 de changement de langue visible dès le 1er écran d'onboarding.
+- L'écran « Choisissez votre langue » de l'onboarding = langue de TRAVAIL des messages (lecture/écriture), pré-remplie avec la langue du device — reformuler le titre pour lever l'ambiguïté.
+- Phase 4 : choix du numéro WhatsApp Business à connecter (un pro peut en avoir plusieurs) + activation de la traduction par numéro.
+
 ## 1. Premier lancement
 
 ```
