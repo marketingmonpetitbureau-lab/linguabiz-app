@@ -70,6 +70,20 @@ button:disabled{opacity:.6}
     statusEl.textContent = 'Connexion refusée : ' + (qs.get('error_description') || qs.get('error'));
   }
 
+  // Assistant complet (QR / coexistence) via le SDK Facebook
+  var sessionInfo = null;
+  window.addEventListener('message', function (event) {
+    if (!String(event.origin).endsWith('facebook.com')) return;
+    try {
+      var data = JSON.parse(event.data);
+      if (data.type === 'WA_EMBEDDED_SIGNUP') sessionInfo = data.data || sessionInfo;
+    } catch (e) { /* ignore */ }
+  });
+
+  window.fbAsyncInit = function () {
+    FB.init({ appId: APP_ID, autoLogAppEvents: true, xfbml: true, version: 'v25.0' });
+  };
+
   btn.addEventListener('click', function () {
     statusEl.textContent = '';
     if (!getLbToken()) {
@@ -77,31 +91,42 @@ button:disabled{opacity:.6}
       statusEl.textContent = 'Ouvrez cette page depuis l’app LinguaBiz (Réglages → Connecter WhatsApp Business).';
       return;
     }
-    var extras = encodeURIComponent(JSON.stringify({
-      sessionInfoVersion: '3',
-      featureType: 'whatsapp_business_app_onboarding',
-    }));
-    location.href = 'https://www.facebook.com/v25.0/dialog/oauth'
-      + '?client_id=' + APP_ID
-      + '&config_id=' + CONFIG_ID
-      + '&response_type=code'
-      + '&override_default_response_type=true'
-      + '&redirect_uri=' + encodeURIComponent(REDIRECT_URI)
-      + '&extras=' + extras;
+    if (typeof FB === 'undefined') {
+      statusEl.className = 'status err';
+      statusEl.textContent = 'SDK Facebook non chargé — rechargez la page.';
+      return;
+    }
+    FB.login(function (response) {
+      var c = response && response.authResponse && response.authResponse.code;
+      if (!c) {
+        statusEl.className = 'status err';
+        statusEl.textContent = 'Connexion annulée ou refusée.';
+        return;
+      }
+      finalize(c);
+    }, {
+      config_id: CONFIG_ID,
+      response_type: 'code',
+      override_default_response_type: true,
+      extras: { sessionInfoVersion: '3', featureType: 'whatsapp_business_app_onboarding' },
+    });
   });
 
   function finalize(code) {
     btn.disabled = true;
     statusEl.className = 'status';
     statusEl.innerHTML = '<span class="spin"></span>Finalisation de la connexion…';
+    var payload = { code: code, lbtoken: getLbToken() };
+    if (sessionInfo && sessionInfo.waba_id) {
+      payload.waba_id = sessionInfo.waba_id;
+      payload.phone_number_id = sessionInfo.phone_number_id;
+    } else {
+      payload.redirect_uri = REDIRECT_URI;
+    }
     fetch(ONBOARD_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        code: code,
-        redirect_uri: REDIRECT_URI,
-        lbtoken: getLbToken(),
-      }),
+      body: JSON.stringify(payload),
     }).then(function (r) { return r.json(); }).then(function (d) {
       btn.disabled = false;
       if (d.connected) {
@@ -118,5 +143,6 @@ button:disabled{opacity:.6}
     });
   }
 </script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js"></script>
 </body>
 </html>
