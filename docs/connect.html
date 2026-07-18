@@ -116,7 +116,8 @@ button:disabled{opacity:.6}
     btn.disabled = true;
     statusEl.className = 'status';
     statusEl.innerHTML = '<span class="spin"></span>Finalisation de la connexion…';
-    var payload = { code: code, lbtoken: getLbToken(), redirect_uri: REDIRECT_URI };
+    // Flux SDK (FB.login) : le code s'échange SANS redirect_uri.
+    var payload = { code: code, lbtoken: getLbToken(), flow: 'sdk' };
     if (sessionInfo && sessionInfo.waba_id) {
       payload.waba_id = sessionInfo.waba_id;
       payload.phone_number_id = sessionInfo.phone_number_id;
